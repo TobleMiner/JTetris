@@ -3,6 +3,7 @@ package de.toble.tetris;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public abstract class Game implements Runnable
@@ -15,6 +16,8 @@ public abstract class Game implements Runnable
 	protected Random rand = new Random(System.currentTimeMillis());
 
 	private long ticks = 0;
+
+	private ScheduledFuture<?> future;
 
 	/**
 	 * Returns number of game ticks per second
@@ -31,8 +34,20 @@ public abstract class Game implements Runnable
 	public void init()
 	{
 		assert !initialized;
+		this.start();
+	}
+
+	private void start()
+	{
 		int msPerTick = 1000 / getTPS();
-		scheduler.scheduleAtFixedRate(this, msPerTick, msPerTick, TimeUnit.MILLISECONDS);
+		this.future = scheduler.scheduleAtFixedRate(this, msPerTick, msPerTick,
+				TimeUnit.MILLISECONDS);
+	}
+
+	private void stop()
+	{
+		this.future.cancel(true);
+		this.future = null;
 	}
 
 	@Override
@@ -49,4 +64,11 @@ public abstract class Game implements Runnable
 		return this.ticks;
 	}
 
+	synchronized public void pause()
+	{
+		if(this.future != null)
+			this.stop();
+		else
+			this.start();
+	}
 }

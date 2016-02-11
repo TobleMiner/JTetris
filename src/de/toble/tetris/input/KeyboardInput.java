@@ -33,6 +33,9 @@ public class KeyboardInput implements KeyListener
 			case KeyEvent.VK_DOWN:
 				this.playfield.moveDown();
 				break;
+			case KeyEvent.VK_ESCAPE:
+				this.playfield.pause();
+				break;
 			default:
 				break;
 		}
