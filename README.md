@@ -1,4 +1,4 @@
 JTetris
 =======
 
-JTetris is an MVC implementation of the famous Tetris game.
+JTetris is a MVC implementation of the famous Tetris game.
