@@ -1,17 +1,6 @@
 package de.toble.tetris.gui.view;
 
-import javax.swing.JComponent;
-
-import de.toble.tetris.data.Playfield;
-
-public abstract class View extends JComponent
+public interface View
 {
-	protected Playfield playfield;
-
-	public View(Playfield data)
-	{
-		this.playfield = data;
-	}
-
-	public abstract void notifyChanged();
+	public void notifyChanged();
 }

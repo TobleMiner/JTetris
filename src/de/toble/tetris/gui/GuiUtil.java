@@ -5,6 +5,11 @@ import java.awt.image.BufferedImage;
 
 public class GuiUtil
 {
+	private GuiUtil()
+	{
+
+	}
+
 	public static void colorArrayToImg(Color[][] colors, BufferedImage img)
 	{
 		for(int y = 0; y < img.getHeight(); y++)

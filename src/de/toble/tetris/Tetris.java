@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import de.toble.tetris.data.Playfield;
-import de.toble.tetris.gui.view.MonitorView;
-import de.toble.tetris.gui.view.View;
+import de.toble.tetris.gui.view.desktop.JView;
+import de.toble.tetris.gui.view.desktop.MonitorView;
 import de.toble.tetris.input.KeyboardInput;
 
 public class Tetris extends JFrame implements Runnable
@@ -16,7 +16,7 @@ public class Tetris extends JFrame implements Runnable
 	public void run()
 	{
 		Playfield pf = new Playfield(new Dimension(20, 30));
-		View v = new MonitorView(pf);
+		JView v = new MonitorView(pf);
 		v.setSize(new Dimension(20, 30));
 		pf.addView(v);
 		pf.init();
@@ -25,7 +25,7 @@ public class Tetris extends JFrame implements Runnable
 		this.setTitle("Tetris");
 		this.pack();
 		this.setVisible(true);
-		this.setSize(new Dimension(200, 300));
+		this.setSize(new Dimension(300, 300));
 		this.addKeyListener(new KeyboardInput(pf));
 	}
 

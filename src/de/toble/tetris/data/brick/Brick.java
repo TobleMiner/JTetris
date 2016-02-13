@@ -70,6 +70,7 @@ public abstract class Brick extends Entity
 
 	private void solidify()
 	{
+		int blocks = 0;
 		boolean[][] shape = this.getShape();
 		Point position = this.getPosition();
 		for(int y = 0; y < shape.length; y++)
@@ -79,11 +80,13 @@ public abstract class Brick extends Entity
 			{
 				if(!shape[y][x]) continue;
 				int posx = position.x + x;
+				blocks++;
 				this.playfield.getGrid()[posy][posx] = this.getColor();
 			}
 		}
 		this.remove = true;
 		this.playfield.brickSet();
+		assert blocks <= shape.length * shape[0].length;
 	}
 
 	private boolean collidesWithBorders(Point position)
@@ -105,7 +108,7 @@ public abstract class Brick extends Entity
 		return false;
 	}
 
-	private boolean collides()
+	public boolean collides()
 	{
 		return this.collides(this.getPosition());
 	}
@@ -150,13 +153,19 @@ public abstract class Brick extends Entity
 		boolean[][] shape = this.getShape();
 		int color = this.getColor().getRGB();
 		Point pos = this.getPosition();
+		int blocks = 0;
 		for(int y = 0; y < shape.length; y++)
 		{
 			for(int x = 0; x < shape[0].length; x++)
 			{
-				if(shape[y][x]) img.setRGB(pos.x + x, pos.y + y, color);
+				if(shape[y][x])
+				{
+					img.setRGB(pos.x + x, pos.y + y, color);
+					blocks++;
+				}
 			}
 		}
+		assert blocks <= shape.length * shape[0].length;
 	}
 
 	public boolean setRotation(int rotation)

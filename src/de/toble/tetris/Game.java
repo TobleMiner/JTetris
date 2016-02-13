@@ -19,6 +19,8 @@ public abstract class Game implements Runnable
 
 	private ScheduledFuture<?> future;
 
+	protected boolean gameOver = false;
+
 	/**
 	 * Returns number of game ticks per second
 	 * 
@@ -37,14 +39,15 @@ public abstract class Game implements Runnable
 		this.start();
 	}
 
-	private void start()
+	protected void start()
 	{
+		if(this.gameOver) return;
 		int msPerTick = 1000 / getTPS();
 		this.future = scheduler.scheduleAtFixedRate(this, msPerTick, msPerTick,
 				TimeUnit.MILLISECONDS);
 	}
 
-	private void stop()
+	protected void stop()
 	{
 		this.future.cancel(true);
 		this.future = null;
@@ -70,5 +73,16 @@ public abstract class Game implements Runnable
 			this.stop();
 		else
 			this.start();
+	}
+
+	protected void gameOver()
+	{
+		this.gameOver = true;
+		this.stop();
+	}
+
+	public boolean isGameOver()
+	{
+		return this.gameOver;
 	}
 }

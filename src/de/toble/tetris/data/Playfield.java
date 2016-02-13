@@ -18,7 +18,16 @@ import de.toble.tetris.gui.view.View;
 
 public class Playfield extends Game
 {
-	int bricks = 0;
+	private final static double SPEED_MIN = 10;
+	private final static double SPEED_MAX = 0.5;
+
+	private final static int SCORE_BRICK_SET = 10;
+	private final static int SCORE_ROW = 1000;
+	private final static double SCORE_ROW_MULTIPLIER = 2;
+
+	private int rows = 0;
+
+	private int score = 0;
 
 	private List<Entity> entityRegistry = new ArrayList<>();
 	private List<Entity> entityRemove = new ArrayList<>();
@@ -47,6 +56,13 @@ public class Playfield extends Game
 		this.entityRegistry.add(this.activeEntity);
 	}
 
+	private int calcBrickFallTicks()
+	{
+		double speed = SPEED_MIN * Math.pow(0.95, this.rows);
+		speed = Math.max(speed, SPEED_MAX);
+		return (int) Math.ceil(speed / this.size.height * this.getTPS());
+	}
+
 	private Brick getNewBrick()
 	{
 		Class<?>[] classes = { BrickI.class, BrickL.class, BrickSquare.class,
@@ -55,8 +71,10 @@ public class Playfield extends Game
 		try
 		{
 			Brick brick = (Brick) clazz.getConstructor(Playfield.class, int.class)
-					.newInstance(this, 20);
-			brick.setPosition(new Point(12, 0));
+					.newInstance(this, this.calcBrickFallTicks());
+			brick.setPosition(
+					new Point(this.size.width / 2 - brick.getShape()[0].length / 2, 0));
+			if(brick.collides()) return null;
 			return brick;
 		}
 		catch(Exception e)
@@ -72,18 +90,17 @@ public class Playfield extends Game
 		for(int y = index; y >= 0; y--)
 		{
 			if(y > 0)
-			{
-				this.grid[y] = this.grid[y - 1];
-			}
+				System.arraycopy(this.grid[y - 1], 0, this.grid[y], 0,
+						this.grid[y].length);
 			else
-			{
 				Arrays.fill(this.grid[y], null);
-			}
 		}
 	}
 
 	private void checkLines()
 	{
+		int score = 0;
+		double multiplier = 1;
 		for(int y = 0; y < this.grid.length; y++)
 		{
 			for(int x = 0; x < this.grid[y].length; x++)
@@ -93,9 +110,13 @@ public class Playfield extends Game
 				{
 					this.removeLine(y);
 					y--;
+					this.rows++;
+					score += (int) (SCORE_ROW * multiplier);
+					multiplier += SCORE_ROW_MULTIPLIER - 1;
 				}
 			}
 		}
+		this.score += score;
 	}
 
 	@Override
@@ -128,8 +149,12 @@ public class Playfield extends Game
 
 	public void brickSet()
 	{
+		this.score += SCORE_BRICK_SET;
 		this.activeEntity = getNewBrick();
-		this.entityAdd.add(this.activeEntity);
+		if(this.activeEntity == null)
+			this.gameOver();
+		else
+			this.entityAdd.add(this.activeEntity);
 	}
 
 	public Dimension getSize()
@@ -207,5 +232,10 @@ public class Playfield extends Game
 		if(point.x < 0 || point.y < 0) return false;
 		if(point.x >= this.size.width || point.y >= this.size.height) return false;
 		return true;
+	}
+
+	public int getScore()
+	{
+		return this.score;
 	}
 }
