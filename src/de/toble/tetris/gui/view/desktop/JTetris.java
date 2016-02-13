@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import de.toble.tetris.data.Entity;
 import de.toble.tetris.data.Tetris;
 import de.toble.tetris.data.brick.Brick;
-import de.toble.tetris.gui.GuiUtil;
-import de.toble.tetris.gui.render.SimpleBrickRender;
+import de.toble.tetris.gui.render.TetrisRender;
+import de.toble.tetris.gui.render.entity.brick.SimpleBrickRender;
 
 public class JTetris extends JView
 {
@@ -36,10 +36,10 @@ public class JTetris extends JView
 			gfx.setBackground(new Color(0xec1a1a));
 			gfx.clearRect(0, 0, size.width, size.height);
 		}
-		GuiUtil.colorArrayToImg(grid, img);
+		new TetrisRender().render(grid, img);
 		assert this.tetris.getEntities().size() <= 1;
-		new ArrayList<Entity>(this.tetris.getEntities()).forEach(
-				entity -> this.getRender(entity.getClass()).render(entity, img));
+		new ArrayList<Entity>(this.tetris.getEntities())
+				.forEach(entity -> this.getRender(entity.getClass()).render(entity, img));
 		Image newImg = img.getScaledInstance(this.getWidth(), this.getHeight(),
 				BufferedImage.SCALE_FAST);
 		graphics.drawImage(newImg, 0, 0, null);

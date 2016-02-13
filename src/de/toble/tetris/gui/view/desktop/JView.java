@@ -6,7 +6,7 @@ import java.util.HashMap;
 import javax.swing.JPanel;
 
 import de.toble.tetris.data.Tetris;
-import de.toble.tetris.gui.render.EntityRender;
+import de.toble.tetris.gui.render.entity.EntityRender;
 import de.toble.tetris.gui.view.View;
 
 public abstract class JView extends JPanel implements View

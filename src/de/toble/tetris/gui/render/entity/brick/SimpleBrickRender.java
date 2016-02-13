@@ -1,4 +1,4 @@
-package de.toble.tetris.gui.render;
+package de.toble.tetris.gui.render.entity.brick;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;

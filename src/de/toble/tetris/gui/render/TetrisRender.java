@@ -1,16 +1,11 @@
-package de.toble.tetris.gui;
+package de.toble.tetris.gui.render;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class GuiUtil
+public class TetrisRender
 {
-	private GuiUtil()
-	{
-
-	}
-
-	public static void colorArrayToImg(Color[][] colors, BufferedImage img)
+	public void render(Color[][] colors, BufferedImage img)
 	{
 		for(int y = 0; y < img.getHeight(); y++)
 		{
