@@ -1,5 +1,7 @@
 package de.toble.tetris.gui.view.desktop;
 
+import java.awt.Font;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
@@ -13,6 +15,11 @@ public class JTetrisSidePanel extends JView
 	{
 		super(data);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		JLabel scoreCaption = new JLabel("SCORE");
+		Font def = scoreCaption.getFont();
+		scoreCaption.setFont(new Font(def.getName(), Font.BOLD, def.getSize()));
+		scoreCaption.setAlignmentX(CENTER_ALIGNMENT);
+		this.add(scoreCaption);
 		this.score = new JLabel();
 		this.score.setAlignmentX(CENTER_ALIGNMENT);
 		this.add(this.score);
