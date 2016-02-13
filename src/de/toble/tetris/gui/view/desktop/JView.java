@@ -11,7 +11,7 @@ import de.toble.tetris.gui.view.View;
 
 public abstract class JView extends JPanel implements View
 {
-	protected final HashMap<Class<?>, EntityRender> rendererRegistry = new HashMap<>();
+	protected final HashMap<Class<?>, EntityRender> renderRegistry = new HashMap<>();
 
 	protected final Tetris tetris;
 
@@ -29,19 +29,19 @@ public abstract class JView extends JPanel implements View
 		}
 	}
 
-	protected void registerRenderer(EntityRender renderer, Class<?> type)
+	protected void registerRender(EntityRender renderer, Class<?> type)
 	{
-		this.rendererRegistry.put(type, renderer);
+		this.renderRegistry.put(type, renderer);
 	}
 
-	protected EntityRender getRenderer(Class<?> type)
+	protected EntityRender getRender(Class<?> type)
 	{
-		EntityRender render = this.rendererRegistry.get(type);
+		EntityRender render = this.renderRegistry.get(type);
 		while(render == null)
 		{
 			type = type.getSuperclass();
 			if(type == null) break;
-			render = this.rendererRegistry.get(type);
+			render = this.renderRegistry.get(type);
 		}
 		return render;
 	}
