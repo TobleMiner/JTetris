@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 import de.toble.tetris.data.Entity;
 import de.toble.tetris.data.Tetris;
+import de.toble.tetris.data.brick.Brick;
 import de.toble.tetris.gui.GuiUtil;
+import de.toble.tetris.gui.render.SimpleBrickRender;
 
 public class JTetris extends JView
 {
@@ -18,6 +20,7 @@ public class JTetris extends JView
 	{
 		super(data);
 		this.setDoubleBuffered(true);
+		this.registerRenderer(new SimpleBrickRender(), Brick.class);
 	}
 
 	@Override
@@ -35,8 +38,8 @@ public class JTetris extends JView
 		}
 		GuiUtil.colorArrayToImg(grid, img);
 		assert this.tetris.getEntities().size() <= 1;
-		new ArrayList<Entity>(this.tetris.getEntities())
-				.forEach(entity -> entity.render(img));
+		new ArrayList<Entity>(this.tetris.getEntities()).forEach(
+				entity -> this.getRenderer(entity.getClass()).render(entity, img));
 		Image newImg = img.getScaledInstance(this.getWidth(), this.getHeight(),
 				BufferedImage.SCALE_FAST);
 		graphics.drawImage(newImg, 0, 0, null);

@@ -1,7 +1,6 @@
 package de.toble.tetris.data;
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 
 public abstract class Entity
 {
@@ -34,6 +33,4 @@ public abstract class Entity
 	{
 		return this.remove;
 	}
-
-	public abstract void render(BufferedImage img);
 }

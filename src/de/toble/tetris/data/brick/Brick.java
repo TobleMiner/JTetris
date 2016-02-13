@@ -3,7 +3,6 @@ package de.toble.tetris.data.brick;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 
 import de.toble.tetris.data.Entity;
 import de.toble.tetris.data.Tetris;
@@ -145,27 +144,6 @@ public abstract class Brick extends Entity
 			return true;
 		}
 		return forceUpdate;
-	}
-
-	@Override
-	public void render(BufferedImage img)
-	{
-		boolean[][] shape = this.getShape();
-		int color = this.getColor().getRGB();
-		Point pos = this.getPosition();
-		int blocks = 0;
-		for(int y = 0; y < shape.length; y++)
-		{
-			for(int x = 0; x < shape[0].length; x++)
-			{
-				if(shape[y][x])
-				{
-					img.setRGB(pos.x + x, pos.y + y, color);
-					blocks++;
-				}
-			}
-		}
-		assert blocks <= shape.length * shape[0].length;
 	}
 
 	public boolean setRotation(int rotation)
