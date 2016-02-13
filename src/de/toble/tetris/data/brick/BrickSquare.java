@@ -6,9 +6,9 @@ import de.toble.tetris.data.Tetris;
 
 public class BrickSquare extends Brick
 {
-	public BrickSquare(Tetris p, int speed)
+	public BrickSquare(Tetris t, int speed)
 	{
-		super(p, speed);
+		super(t, speed);
 	}
 
 	@Override
