@@ -16,7 +16,7 @@ import de.toble.tetris.data.brick.BrickSquare;
 import de.toble.tetris.data.brick.BrickT;
 import de.toble.tetris.gui.view.View;
 
-public class Playfield extends Game
+public class Tetris extends Game
 {
 	private final static double SPEED_MIN = 10;
 	private final static double SPEED_MAX = 0.5;
@@ -41,7 +41,7 @@ public class Playfield extends Game
 
 	private final Dimension size;
 
-	public Playfield(Dimension size)
+	public Tetris(Dimension size)
 	{
 		super();
 		this.grid = new Color[size.height][size.width];
@@ -70,7 +70,7 @@ public class Playfield extends Game
 		Class<?> clazz = classes[this.rand.nextInt(classes.length)];
 		try
 		{
-			Brick brick = (Brick) clazz.getConstructor(Playfield.class, int.class)
+			Brick brick = (Brick) clazz.getConstructor(Tetris.class, int.class)
 					.newInstance(this, this.calcBrickFallTicks());
 			brick.setPosition(
 					new Point(this.size.width / 2 - brick.getShape()[0].length / 2, 0));

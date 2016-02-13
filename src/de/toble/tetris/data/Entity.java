@@ -5,13 +5,13 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity
 {
-	protected final Playfield playfield;
+	protected final Tetris tetris;
 
 	protected boolean remove = false;
 
-	public Entity(Playfield p)
+	public Entity(Tetris p)
 	{
-		this.playfield = p;
+		this.tetris = p;
 	}
 
 	/**

@@ -8,42 +8,43 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.JComponent;
-
 import de.toble.tetris.data.Entity;
-import de.toble.tetris.data.Playfield;
+import de.toble.tetris.data.Tetris;
 import de.toble.tetris.gui.GuiUtil;
 
-public class JTetris extends JComponent
+public class JTetris extends JView
 {
-	private final Playfield playfield;
-
-	public JTetris(Playfield data)
+	public JTetris(Tetris data)
 	{
-		super();
-		this.playfield = data;
+		super(data);
 		this.setDoubleBuffered(true);
 	}
 
 	@Override
 	public void paint(Graphics graphics)
 	{
-		Color[][] grid = this.playfield.getGrid();
-		Dimension size = this.playfield.getSize();
+		Color[][] grid = this.tetris.getGrid();
+		Dimension size = this.tetris.getSize();
 		BufferedImage img = new BufferedImage(size.width, size.height,
 				BufferedImage.TYPE_3BYTE_BGR);
-		if(this.playfield.isGameOver())
+		if(this.tetris.isGameOver())
 		{
 			Graphics2D gfx = img.createGraphics();
 			gfx.setBackground(new Color(0xec1a1a));
 			gfx.clearRect(0, 0, size.width, size.height);
 		}
 		GuiUtil.colorArrayToImg(grid, img);
-		assert this.playfield.getEntities().size() <= 1;
-		new ArrayList<Entity>(this.playfield.getEntities())
+		assert this.tetris.getEntities().size() <= 1;
+		new ArrayList<Entity>(this.tetris.getEntities())
 				.forEach(entity -> entity.render(img));
 		Image newImg = img.getScaledInstance(this.getWidth(), this.getHeight(),
 				BufferedImage.SCALE_FAST);
 		graphics.drawImage(newImg, 0, 0, null);
+	}
+
+	@Override
+	public void notifyChanged()
+	{
+		this.repaint();
 	}
 }

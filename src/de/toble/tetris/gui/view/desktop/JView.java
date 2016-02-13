@@ -4,16 +4,16 @@ import java.awt.Component;
 
 import javax.swing.JPanel;
 
-import de.toble.tetris.data.Playfield;
+import de.toble.tetris.data.Tetris;
 import de.toble.tetris.gui.view.View;
 
 public abstract class JView extends JPanel implements View
 {
-	protected Playfield playfield;
+	protected Tetris tetris;
 
-	public JView(Playfield data)
+	public JView(Tetris data)
 	{
-		this.playfield = data;
+		this.tetris = data;
 	}
 
 	@Override

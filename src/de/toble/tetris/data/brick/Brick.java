@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import de.toble.tetris.data.Entity;
-import de.toble.tetris.data.Playfield;
+import de.toble.tetris.data.Tetris;
 
 public abstract class Brick extends Entity
 {
@@ -18,7 +18,7 @@ public abstract class Brick extends Entity
 
 	private Point pos;
 
-	public Brick(Playfield p, int speed)
+	public Brick(Tetris p, int speed)
 	{
 		super(p);
 		this.speed = speed;
@@ -81,11 +81,11 @@ public abstract class Brick extends Entity
 				if(!shape[y][x]) continue;
 				int posx = position.x + x;
 				blocks++;
-				this.playfield.getGrid()[posy][posx] = this.getColor();
+				this.tetris.getGrid()[posy][posx] = this.getColor();
 			}
 		}
 		this.remove = true;
-		this.playfield.brickSet();
+		this.tetris.brickSet();
 		assert blocks <= shape.length * shape[0].length;
 	}
 
@@ -99,7 +99,7 @@ public abstract class Brick extends Entity
 			{
 				if(!shape[y][x]) continue;
 				int posx = position.x + x;
-				if(!this.playfield.isInside(new Point(posx, posy)))
+				if(!this.tetris.isInside(new Point(posx, posy)))
 				{
 					return true;
 				}
@@ -116,7 +116,7 @@ public abstract class Brick extends Entity
 	private boolean collides(Point position)
 	{
 		boolean[][] shape = this.getShape();
-		if(position.y + shape.length - 1 == this.playfield.getSize().height) return true;
+		if(position.y + shape.length - 1 == this.tetris.getSize().height) return true;
 		for(int y = 0; y < shape.length; y++)
 		{
 			int posy = position.y + y;
@@ -124,8 +124,8 @@ public abstract class Brick extends Entity
 			{
 				if(!shape[y][x]) continue;
 				int posx = position.x + x;
-				if(posx >= this.playfield.getSize().width) continue;
-				if(this.playfield.collidesWithFill(new Point(posx, posy)))
+				if(posx >= this.tetris.getSize().width) continue;
+				if(this.tetris.collidesWithFill(new Point(posx, posy)))
 				{
 					return true;
 				}
@@ -139,7 +139,7 @@ public abstract class Brick extends Entity
 	{
 		boolean forceUpdate = this.needsUpdate;
 		this.needsUpdate = false;
-		if(this.playfield.getTicks() % this.speed == 0) // Go down by one
+		if(this.tetris.getTicks() % this.speed == 0) // Go down by one
 		{
 			if(!this.moveDown()) this.solidify();
 			return true;
@@ -171,7 +171,7 @@ public abstract class Brick extends Entity
 	public boolean setRotation(int rotation)
 	{
 		boolean[][] shape = this.getShape(rotation);
-		Dimension size = this.playfield.getSize();
+		Dimension size = this.tetris.getSize();
 		if(this.pos.y + shape.length > size.height ||
 				this.pos.x + shape[0].length > size.width)
 			return false;

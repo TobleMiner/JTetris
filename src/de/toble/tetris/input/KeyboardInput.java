@@ -3,13 +3,13 @@ package de.toble.tetris.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import de.toble.tetris.data.Playfield;
+import de.toble.tetris.data.Tetris;
 
 public class KeyboardInput implements KeyListener
 {
-	private Playfield playfield;
+	private Tetris playfield;
 
-	public KeyboardInput(Playfield playfield)
+	public KeyboardInput(Tetris playfield)
 	{
 		this.playfield = playfield;
 	}

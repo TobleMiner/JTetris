@@ -3,11 +3,11 @@ package de.toble.tetris.gui.view.desktop;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import de.toble.tetris.data.Playfield;
+import de.toble.tetris.data.Tetris;
 
 public class MonitorView extends JView
 {
-	public MonitorView(Playfield data)
+	public MonitorView(Tetris data)
 	{
 		super(data);
 		this.setDoubleBuffered(true);
@@ -24,6 +24,5 @@ public class MonitorView extends JView
 	{
 		super.notifyChanged();
 		this.invalidate();
-		this.repaint();
 	}
 }

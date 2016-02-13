@@ -2,11 +2,11 @@ package de.toble.tetris.data.brick;
 
 import java.awt.Color;
 
-import de.toble.tetris.data.Playfield;
+import de.toble.tetris.data.Tetris;
 
 public class BrickI extends Brick
 {
-	public BrickI(Playfield p, int speed)
+	public BrickI(Tetris p, int speed)
 	{
 		super(p, speed);
 	}

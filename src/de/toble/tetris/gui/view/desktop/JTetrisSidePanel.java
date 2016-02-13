@@ -3,13 +3,13 @@ package de.toble.tetris.gui.view.desktop;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
-import de.toble.tetris.data.Playfield;
+import de.toble.tetris.data.Tetris;
 
 public class JTetrisSidePanel extends JView
 {
 	private final JLabel score;
 
-	public JTetrisSidePanel(Playfield data)
+	public JTetrisSidePanel(Tetris data)
 	{
 		super(data);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -21,7 +21,6 @@ public class JTetrisSidePanel extends JView
 	@Override
 	public void notifyChanged()
 	{
-		super.notifyChanged();
-		this.score.setText(Integer.toString(this.playfield.getScore()));
+		this.score.setText(Integer.toString(this.tetris.getScore()));
 	}
 }
