@@ -36,13 +36,12 @@ public abstract class JView extends JPanel implements View
 
 	protected EntityRender getRender(Class<?> type)
 	{
-		EntityRender render = this.renderRegistry.get(type);
-		while(render == null)
+		while(type != null)
 		{
+			EntityRender render = this.renderRegistry.get(type);
+			if(render != null) return render;
 			type = type.getSuperclass();
-			if(type == null) break;
-			render = this.renderRegistry.get(type);
 		}
-		return render;
+		return null;
 	}
 }
