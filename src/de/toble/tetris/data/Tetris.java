@@ -127,30 +127,24 @@ public class Tetris extends Game
 	@Override
 	synchronized public void tick()
 	{
-		System.out.println(this.getTicks());
 		try
 		{
 			super.tick();
 			boolean uiUpdate = false;
-			System.out.println("Entity update");
 			for(Entity entity : this.entityRegistry)
 			{
 				if(entity.update()) uiUpdate = true;
 				if(entity.getRemove()) this.entityRemove.add(entity);
 			}
-			System.out.println("Entity add/rm");
 			this.entityRegistry.addAll(this.entityAdd);
 			this.entityAdd.clear();
 			this.entityRegistry.removeAll(this.entityRemove);
 			this.entityRemove.clear();
-			System.out.println("Ui/score update");
 			if(uiUpdate)
 			{
 				this.checkLines();
-				System.out.println("Ui update");
 				this.views.forEach(view -> view.notifyChanged());
 			}
-			System.out.println("Done");
 		}
 		catch(Exception ex)
 		{
