@@ -1,6 +1,7 @@
 package de.toble.tetris.gui.view.desktop;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
@@ -42,6 +43,12 @@ public abstract class JView extends JPanel implements View
 			if(render != null) return render;
 			type = type.getSuperclass();
 		}
+		return null;
+	}
+
+	@Override
+	public Dimension getSizeConstraints()
+	{
 		return null;
 	}
 }

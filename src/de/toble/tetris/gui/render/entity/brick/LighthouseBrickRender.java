@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import de.toble.tetris.data.brick.Brick;
 
-public class SimpleBrickRender extends BrickRender
+public class LighthouseBrickRender extends BrickRender
 {
 	@Override
 	public void renderBrick(Brick brick, BufferedImage img)
@@ -20,7 +20,7 @@ public class SimpleBrickRender extends BrickRender
 			{
 				if(shape[y][x])
 				{
-					img.setRGB(pos.x + x, pos.y + y, color);
+					img.setRGB(pos.x + x, img.getHeight() - (pos.y + y + 1), color);
 					blocks++;
 				}
 			}

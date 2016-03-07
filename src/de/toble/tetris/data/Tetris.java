@@ -37,13 +37,18 @@ public class Tetris extends Game
 
 	private List<View> views = new ArrayList<>();
 
-	private final Color[][] grid;
+	private Color[][] grid;
 
-	private final Dimension size;
+	private Dimension size;
 
 	public Tetris(Dimension size)
 	{
 		super();
+		this.init(size);
+	}
+
+	private void init(Dimension size)
+	{
 		this.grid = new Color[size.height][size.width];
 		this.size = size;
 	}
@@ -122,24 +127,30 @@ public class Tetris extends Game
 	@Override
 	synchronized public void tick()
 	{
+		System.out.println(this.getTicks());
 		try
 		{
 			super.tick();
 			boolean uiUpdate = false;
+			System.out.println("Entity update");
 			for(Entity entity : this.entityRegistry)
 			{
 				if(entity.update()) uiUpdate = true;
 				if(entity.getRemove()) this.entityRemove.add(entity);
 			}
+			System.out.println("Entity add/rm");
 			this.entityRegistry.addAll(this.entityAdd);
 			this.entityAdd.clear();
 			this.entityRegistry.removeAll(this.entityRemove);
 			this.entityRemove.clear();
+			System.out.println("Ui/score update");
 			if(uiUpdate)
 			{
 				this.checkLines();
+				System.out.println("Ui update");
 				this.views.forEach(view -> view.notifyChanged());
 			}
+			System.out.println("Done");
 		}
 		catch(Exception ex)
 		{
@@ -184,6 +195,8 @@ public class Tetris extends Game
 	public void addView(View v)
 	{
 		this.views.add(v);
+		Dimension constraints = v.getSizeConstraints();
+		if(constraints != null) this.init(constraints);
 	}
 
 	public boolean collidesWithFill(Point p)
@@ -191,7 +204,7 @@ public class Tetris extends Game
 		return this.grid[p.y][p.x] != null;
 	}
 
-	public void moveRight()
+	synchronized public void moveRight()
 	{
 		if(this.activeEntity != null && this.activeEntity instanceof Brick)
 		{
@@ -200,7 +213,7 @@ public class Tetris extends Game
 		}
 	}
 
-	public void moveLeft()
+	synchronized public void moveLeft()
 	{
 		if(this.activeEntity != null && this.activeEntity instanceof Brick)
 		{
@@ -209,7 +222,7 @@ public class Tetris extends Game
 		}
 	}
 
-	public void rotate()
+	synchronized public void rotate()
 	{
 		if(this.activeEntity != null && this.activeEntity instanceof Brick)
 		{
@@ -218,7 +231,7 @@ public class Tetris extends Game
 		}
 	}
 
-	public void moveDown()
+	synchronized public void moveDown()
 	{
 		if(this.activeEntity != null && this.activeEntity instanceof Brick)
 		{

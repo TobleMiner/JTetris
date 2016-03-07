@@ -17,7 +17,8 @@ public class JTetrisSidePanel extends JView
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JLabel scoreCaption = new JLabel("SCORE");
 		Font def = scoreCaption.getFont();
-		scoreCaption.setFont(new Font(def.getName(), Font.BOLD, def.getSize()));
+		Font boldFont = new Font(def.getName(), Font.BOLD, def.getSize());
+		scoreCaption.setFont(boldFont);
 		scoreCaption.setAlignmentX(CENTER_ALIGNMENT);
 		this.add(scoreCaption);
 		this.score = new JLabel();
